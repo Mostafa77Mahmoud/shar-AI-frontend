@@ -1,0 +1,42 @@
+
+/* Enhanced scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full hover:bg-gray-500;
+}
+
+/* Layout containers with improved spacing */
+.content-container {
+  @apply container max-w-4xl mx-auto px-4 sm:px-6 py-8;
+}
+
+/* Glass effect containers for modern UI */
+.glass-container {
+  @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-100/50 dark:border-gray-800/50 rounded-xl shadow-sm;
+}
+
+/* Enhanced card effects */
+.hover-card {
+  @apply transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Layout utility classes */
+.center-absolute {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+.center-flex {
+  @apply flex items-center justify-center;
+}
+
+.stretch-bg {
+  @apply absolute inset-0 w-full h-full object-cover;
+}

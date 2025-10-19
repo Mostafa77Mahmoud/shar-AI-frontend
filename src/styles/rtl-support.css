@@ -1,0 +1,105 @@
+
+/* RTL Support - Base direction classes */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* RTL controls and layout adjustments */
+.rtl-controls {
+  flex-direction: row-reverse;
+}
+
+/* RTL Page Structure with proper margin handling */
+[dir="rtl"] .page-content {
+  margin-right: var(--sidebar-width, 0);
+  margin-left: 0;
+  transition: margin-right 0.3s ease;
+}
+
+[dir="ltr"] .page-content {
+  margin-left: var(--sidebar-width, 0);
+  margin-right: 0;
+  transition: margin-left 0.3s ease;
+}
+
+/* RTL fixes for layout and spacing */
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"].text-left,
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"].text-right,
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* RTL margin and spacing adjustments */
+[dir="rtl"] .mr-2 {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+[dir="rtl"] .ml-2 {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+[dir="rtl"] .mr-4 {
+  margin-right: 0 !important;
+  margin-left: 1rem !important;
+}
+
+[dir="rtl"] .ml-4 {
+  margin-left: 0 !important;
+  margin-right: 1rem !important;
+}
+
+/* RTL space adjustments */
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1 !important;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse)) !important;
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse))) !important;
+}
+
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1 !important;
+  margin-right: calc(1rem * var(--tw-space-x-reverse)) !important;
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse))) !important;
+}
+
+/* RTL form input adjustments */
+[dir="rtl"] input, 
+[dir="rtl"] textarea {
+  text-align: right;
+}
+
+/* RTL button icon adjustments */
+[dir="rtl"] .button-icon-left {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+[dir="rtl"] .button-icon-right {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+/* RTL flexbox handling */
+[dir="rtl"] .rtl-flex {
+  @apply flex-row-reverse;
+}
+
+/* RTL icon flip for directional icons */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}

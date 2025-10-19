@@ -1,1 +1,0 @@
-# shar-AI-frontend

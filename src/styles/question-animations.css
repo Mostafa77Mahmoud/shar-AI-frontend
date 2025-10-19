@@ -1,0 +1,334 @@
+
+/**
+ * Question Animations
+ * 
+ * This file contains styles for the "Ask a Question" feature animations
+ */
+
+/* Send Question Button Animation */
+.send-question-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.send-question-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: all 0.4s ease;
+}
+
+.send-question-btn:hover::before {
+  left: 100%;
+}
+
+.send-question-btn:active {
+  transform: scale(0.97);
+}
+
+/* Enhanced Button Click Effect */
+.btn-click-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-click-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.3s ease-out;
+}
+
+.btn-click-effect:active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: 0s;
+}
+
+/* Question Processing Animation */
+.question-processing {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.question-processing .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.7;
+}
+
+.question-processing .dot:nth-child(1) {
+  animation: bounce 1.2s ease-in-out infinite;
+}
+
+.question-processing .dot:nth-child(2) {
+  animation: bounce 1.2s ease-in-out 0.4s infinite;
+}
+
+.question-processing .dot:nth-child(3) {
+  animation: bounce 1.2s ease-in-out 0.8s infinite;
+}
+
+/* Enhanced question animation */
+.question-animation-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.question-animation {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.question-animation .circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-top-color: #22C55E;
+  animation: question-spinner 1.5s linear infinite;
+}
+
+.question-animation .circle:nth-child(2) {
+  border: 4px solid transparent;
+  border-bottom-color: #22C55E;
+  animation: question-spinner 2s linear infinite;
+}
+
+.question-animation .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes question-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Question Shine Animation */
+.question-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.question-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 197, 94, 0.2),
+    transparent
+  );
+  animation: shine 1.8s infinite;
+}
+
+/* Dark mode adjustments */
+.dark .question-shine::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 197, 94, 0.15),
+    transparent
+  );
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  60% { left: 100%; }
+  100% { left: 100%; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Success Animation for Question Response */
+.response-success {
+  animation: successPulse 0.5s ease;
+}
+
+@keyframes successPulse {
+  0% { 
+    opacity: 0;
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  70% { 
+    transform: scale(1.02);
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); 
+  }
+  100% { 
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); 
+  }
+}
+
+/* Typing Indicator Animation */
+.typing-animation {
+  display: flex;
+  align-items: center;
+  column-gap: 0.25rem;
+}
+
+.typing-animation .typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22C55E;
+  animation: typingBounce 1s infinite ease-in-out;
+}
+
+.typing-animation .typing-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing-animation .typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-animation .typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Sending animation overlay */
+.sending-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.sending-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 300px;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .sending-container {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+}
+
+.sending-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22C55E;
+}
+
+.dark .sending-icon {
+  background-color: rgba(34, 197, 94, 0.2);
+}
+
+.sending-text {
+  font-weight: 500;
+  text-align: center;
+}
+
+/* RTL support for animations */
+[dir="rtl"] .send-question-btn::before {
+  left: auto;
+  right: -100%;
+}
+
+[dir="rtl"] .send-question-btn:hover::before {
+  left: auto;
+  right: 100%;
+}
+
+[dir="rtl"] .question-shine::after {
+  left: auto;
+  right: -100%;
+}
+
+@keyframes shine-rtl {
+  0% { right: -100%; }
+  60% { right: 100%; }
+  100% { right: 100%; }
+}
+
+[dir="rtl"] .question-shine::after {
+  animation: shine-rtl 1.8s infinite;
+}

@@ -1,0 +1,19 @@
+
+/* Full RTL layout for Arabic language */
+html[lang="ar"] body {
+  direction: rtl;
+}
+
+html[lang="ar"] .main-layout {
+  flex-direction: row-reverse !important;
+}
+
+/* Properly reverse header elements in RTL mode */
+html[lang="ar"] .header-container {
+  flex-direction: row-reverse;
+}
+
+/* Force RTL layout for Arabic language */
+html[lang="ar"] .main-layout {
+  flex-direction: row-reverse !important;
+}

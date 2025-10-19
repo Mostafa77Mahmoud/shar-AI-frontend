@@ -1,0 +1,61 @@
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .mobile-stack {
+    @apply flex-col;
+  }
+  
+  .mobile-full-width {
+    @apply w-full;
+  }
+  
+  .mobile-sidebar-hidden {
+    @apply hidden;
+  }
+  
+  .mobile-padding {
+    @apply px-2;
+  }
+  
+  /* Improved mobile spacing */
+  .mobile-spacing {
+    @apply space-y-4 py-4;
+  }
+  
+  /* Mobile-specific text adjustments */
+  .mobile-text-center {
+    @apply text-center;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-optimized {
+    @apply px-4;
+  }
+  
+  .tablet-sidebar-compact {
+    @apply w-1/4;
+  }
+  
+  /* Improved tablet spacing */
+  .tablet-spacing {
+    @apply space-y-6 py-6;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1025px) {
+  .desktop-container {
+    @apply max-w-6xl mx-auto;
+  }
+  
+  .desktop-sidebar {
+    @apply w-1/5;
+  }
+  
+  /* Wide screen padding */
+  .desktop-padding {
+    @apply px-8;
+  }
+}

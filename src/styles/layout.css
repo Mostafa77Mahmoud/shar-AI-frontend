@@ -1,0 +1,27 @@
+/* Base imports for layout-related styles */
+@import './rtl-support.css';
+@import './sidebar-styles.css';
+@import './animations.css';
+@import './responsive.css';
+@import './ui-components.css';
+@import './arabic-specific.css';
+
+/* Core layout styles that don't fit into specific categories */
+
+/* RTL Support - Base direction classes */
+/* These are now in rtl-support.css */
+
+/* Fixed sidebar toggle positioning with improved RTL support */
+/* These are now in sidebar-styles.css */
+
+/* Enhanced RTL Page Structure with proper margin handling */
+/* These are now in rtl-support.css */
+
+/* Animation utilities for components */
+/* These are now in animations.css */
+
+/* Enhanced custom scrollbar for dark mode */
+/* These are now in ui-components.css */
+
+/* Responsive adjustments */
+/* These are now in responsive.css */

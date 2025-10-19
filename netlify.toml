@@ -1,0 +1,13 @@
+# frontend/netlify.toml
+
+[build]
+  command = "npm run build"  # Or "yarn build" if you use Yarn
+  publish = "dist"           # The directory where Vite outputs the build
+
+# This rule is essential for Single Page Applications (SPAs) like React.
+# It ensures that any direct navigation to a route (e.g., /some/page)
+# is served by index.html, allowing React Router to handle it.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
