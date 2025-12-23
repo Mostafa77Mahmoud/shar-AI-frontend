@@ -124,7 +124,7 @@ const defaultSessionContextState: SessionContextType = {
   sessionDetails: null,
   decisionHistory: [],
   currentUserRole: (typeof window !== 'undefined' ? localStorage.getItem('shariaaAnalyzerUserRole') as UserRole : null) || 'regular_user',
-  toggleUserRole: () => {},
+  toggleUserRole: () => { },
   isUploading: false,
   uploadProgress: 0,
   isAnalyzingContract: false,
@@ -138,7 +138,7 @@ const defaultSessionContextState: SessionContextType = {
   error: null,
   uploadError: null,
   analysisError: null,
-  uploadAndAnalyzeContract: async () => {},
+  uploadAndAnalyzeContract: async () => { },
   askQuestionAboutTerm: async () => null,
   askGeneralContractQuestion: async () => null,
   reviewUserModification: async () => false,
@@ -146,11 +146,11 @@ const defaultSessionContextState: SessionContextType = {
   generateModifiedContract: async () => null,
   generateMarkedContract: async () => null,
   refreshSessionData: async () => false,
-  updatePdfPreviewInfo: () => {},
-  updateTermLocally: () => {},
-  addDecisionHistory: () => {},
-  clearSession: () => {},
-  setPreviewLoading: () => {},
+  updatePdfPreviewInfo: () => { },
+  updateTermLocally: () => { },
+  addDecisionHistory: () => { },
+  clearSession: () => { },
+  setPreviewLoading: () => { },
 };
 
 const SessionContext = createContext<SessionContextType>(defaultSessionContextState);
@@ -305,7 +305,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     loadStoredSession();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const uploadAndAnalyzeContract = async (file: File) => {
@@ -336,23 +336,23 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const askQuestionAboutTerm = async (termId: string, question: string): Promise<string | null> => {
     if (!sessionIdState || !analysisTermsState) {
-        setErrorState("No active session. Please upload a contract first.");
-        toast({ variant: "destructive", title: "Session Error", description: "No active session." });
-        return null;
+      setErrorState("No active session. Please upload a contract first.");
+      toast({ variant: "destructive", title: "Session Error", description: "No active session." });
+      return null;
     }
     const termInQuestion = analysisTermsState.find(t => t.term_id === termId);
     if (!termInQuestion) {
-        setErrorState("Term not found for asking question.");
-        toast({ variant: "destructive", title: "Application Error", description: "Term not found." });
-        return null;
+      setErrorState("Term not found for asking question.");
+      toast({ variant: "destructive", title: "Application Error", description: "Term not found." });
+      return null;
     }
     setIsTermProcessing(prev => ({ ...prev, [termId]: true }));
     setErrorState(null);
     try {
       const response = await api.askQuestion(sessionIdState, question, termId, termInQuestion.term_text);
       const answerText = response.answer || response.response || '';
-      updateTermLocally({ 
-        term_id: termId, 
+      updateTermLocally({
+        term_id: termId,
         currentQaAnswer: answerText,
         currentQaAnswerMeta: {
           suggested_clause: response.suggested_clause || null,
@@ -370,66 +370,72 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const askGeneralContractQuestion = async (question: string): Promise<string | null> => {
     if (!sessionIdState) {
-        setErrorState("No active session. Please upload a contract first.");
-        toast({ variant: "destructive", title: "Session Error", description: "No active session." });
-        return null;
+      setErrorState("No active session. Please upload a contract first.");
+      toast({ variant: "destructive", title: "Session Error", description: "No active session." });
+      return null;
     }
     setIsProcessingGeneralQuestion(true);
     setErrorState(null);
     try {
-        const response = await api.askQuestion(sessionIdState, question);
-        return response.answer || response.response || '';
+      const response = await api.askQuestion(sessionIdState, question);
+      return response.answer || response.response || '';
     } catch (err: any) {
-        const errorMessage = err.message || "Failed to get answer for the general question.";
-        setErrorState(errorMessage);
-        toast({ variant: "destructive", title: "Interaction Error", description: errorMessage });
-        return null;
+      const errorMessage = err.message || "Failed to get answer for the general question.";
+      setErrorState(errorMessage);
+      toast({ variant: "destructive", title: "Interaction Error", description: errorMessage });
+      return null;
     } finally { setIsProcessingGeneralQuestion(false); }
   };
 
   const reviewUserModification = async (termId: string, userTextToReview: string, originalTermText: string): Promise<boolean> => {
     if (!sessionIdState) {
-        toast({ variant: "destructive", title: "Session Error", description: "No active session." });
-        return false;
+      toast({ variant: "destructive", title: "Session Error", description: "No active session." });
+      return false;
     }
     console.debug("[Session] reviewUserModification:start", { termId });
     setIsReviewingModification(prev => ({ ...prev, [termId]: true }));
     setErrorState(null);
     try {
-        const isExpert = currentUserRole === 'shariah_expert';
-        const reviewResponse = await api.reviewUserModificationApi(
-          sessionIdState,
-          termId,
-          userTextToReview,
-          originalTermText,
-          isExpert
-        );
-        console.debug("[Session] reviewUserModification:success", { termId, compliance_status: reviewResponse.compliance_status });
-        updateTermLocally({
-            term_id: termId,
-            userModifiedText: reviewResponse.reviewed_text,
-            reviewedSuggestion: reviewResponse.reviewed_text,
-            isReviewedSuggestionValid: reviewResponse.is_still_valid_sharia,
-            reviewedSuggestionStatus: reviewResponse.compliance_status,
-            reviewedSuggestionIssue: reviewResponse.sharia_issue || reviewResponse.new_sharia_issue || null,
-            currentQaAnswer: null,
-            isUserConfirmed: false,
-        });
-        setDecisionHistoryState(prev => [...prev, {
-          action: 'ai_review',
-          actor: 'ai',
-          timestamp: new Date().toISOString(),
-          termId,
-          details: `AI reviewed user modification for ${termId}`
-        }]);
-        toast({ title: "Review Complete", description: "Your modification has been reviewed by AI." });
-        return true;
+      const isExpert = currentUserRole === 'shariah_expert';
+      const reviewResponse = await api.reviewUserModificationApi(
+        sessionIdState,
+        termId,
+        userTextToReview,
+        originalTermText,
+        isExpert
+      );
+      console.debug("[Session] reviewUserModification:success", { termId, compliance_status: reviewResponse.compliance_status });
+      updateTermLocally({
+        term_id: termId,
+        userModifiedText: reviewResponse.reviewed_text,
+        reviewedSuggestion: reviewResponse.reviewed_text,
+        isReviewedSuggestionValid: reviewResponse.is_still_valid_sharia,
+        reviewedSuggestionStatus: reviewResponse.compliance_status,
+        reviewedSuggestionIssue: reviewResponse.sharia_issue || reviewResponse.new_sharia_issue || null,
+        currentQaAnswer: null,
+        isUserConfirmed: false,
+      });
+      setDecisionHistoryState(prev => [...prev, {
+        action: 'ai_review',
+        actor: 'ai',
+        timestamp: new Date().toISOString(),
+        termId,
+        details: `AI reviewed user modification for ${termId}`
+      }]);
+
+      // If expert override was used, refresh session data to reflect backend truth (status/colors)
+      if (isExpert) {
+        await refreshSessionData();
+      }
+
+      toast({ title: "Review Complete", description: "Your modification has been reviewed by AI." });
+      return true;
     } catch (err: any) {
-        const errorMessage = err.message || "Failed to review modification.";
-        setErrorState(errorMessage);
-        toast({ variant: "destructive", title: "Review Error", description: errorMessage });
-        return false;
-    } finally { 
+      const errorMessage = err.message || "Failed to review modification.";
+      setErrorState(errorMessage);
+      toast({ variant: "destructive", title: "Review Error", description: errorMessage });
+      return false;
+    } finally {
       setIsReviewingModification(prev => ({ ...prev, [termId]: false }));
       console.debug("[Session] reviewUserModification:complete", { termId });
     }
@@ -437,9 +443,9 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const confirmTermModification = async (termId: string, textToConfirm: string): Promise<boolean> => {
     if (!sessionIdState) {
-        setErrorState("No active session.");
-        toast({ variant: "destructive", title: "Session Error", description: "No active session." });
-        return false;
+      setErrorState("No active session.");
+      toast({ variant: "destructive", title: "Session Error", description: "No active session." });
+      return false;
     }
     console.debug("[Session] confirmTermModification:start", { termId });
     setIsTermProcessing(prev => ({ ...prev, [termId]: true }));
@@ -449,7 +455,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       if (response.success) {
         // Refetch the session terms to get the accurate updated state from backend
         const updatedTermsData = await api.getSessionTermsApi(sessionIdState);
-        
+
         // Map the updated terms to frontend format
         const updatedFrontendTerms: FrontendAnalysisTerm[] = updatedTermsData.map((term: api.ApiAnalysisTerm) => {
           const existingTerm = analysisTermsState?.find(t => t.term_id === term.term_id);
@@ -474,7 +480,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
             expert_override_is_valid_sharia: term.expert_override_is_valid_sharia === undefined ? null : term.expert_override_is_valid_sharia,
           };
         });
-        
+
         setAnalysisTermsState(updatedFrontendTerms);
         console.debug("[Session] confirmTermModification:stateUpdated", { termId, updatedCount: updatedFrontendTerms.length });
         setDecisionHistoryState(prev => [...prev, {
@@ -491,11 +497,11 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       toast({ variant: "destructive", title: "Confirmation Error", description: errorMessage });
       return false;
     } catch (err: any) {
-        const errorMessage = err.message || "Failed to confirm term modification.";
-        setErrorState(errorMessage);
-        toast({ variant: "destructive", title: "Confirmation Error", description: errorMessage });
-        return false;
-    } finally { 
+      const errorMessage = err.message || "Failed to confirm term modification.";
+      setErrorState(errorMessage);
+      toast({ variant: "destructive", title: "Confirmation Error", description: errorMessage });
+      return false;
+    } finally {
       setIsTermProcessing(prev => ({ ...prev, [termId]: false }));
       console.debug("[Session] confirmTermModification:complete", { termId });
     }
@@ -514,11 +520,11 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       if (response.success) {
         const baseFilename = sessionDetailsState.original_filename.replace(/\.[^/.]+$/, "");
         const docxInfo: CloudinaryFileInfo | undefined = response.modified_docx_cloudinary_url
-            ? { url: response.modified_docx_cloudinary_url, public_id: '', format: 'docx', user_facing_filename: `modified_${baseFilename}.docx` }
-            : undefined;
+          ? { url: response.modified_docx_cloudinary_url, public_id: '', format: 'docx', user_facing_filename: `modified_${baseFilename}.docx` }
+          : undefined;
         const txtInfo: CloudinaryFileInfo | undefined = response.modified_txt_cloudinary_url
-            ? { url: response.modified_txt_cloudinary_url, public_id: '', format: 'txt', user_facing_filename: `modified_${baseFilename}.txt` }
-            : undefined;
+          ? { url: response.modified_txt_cloudinary_url, public_id: '', format: 'txt', user_facing_filename: `modified_${baseFilename}.txt` }
+          : undefined;
 
         setSessionDetailsState(prev => prev ? ({
           ...prev,
@@ -551,8 +557,8 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       if (response.success) {
         const baseFilename = sessionDetailsState.original_filename.replace(/\.[^/.]+$/, "");
         const docxInfo: CloudinaryFileInfo | undefined = response.marked_docx_cloudinary_url
-            ? { url: response.marked_docx_cloudinary_url, public_id: '', format: 'docx', user_facing_filename: `marked_${baseFilename}.docx` }
-            : undefined;
+          ? { url: response.marked_docx_cloudinary_url, public_id: '', format: 'docx', user_facing_filename: `marked_${baseFilename}.docx` }
+          : undefined;
 
         setSessionDetailsState(prev => prev ? ({
           ...prev,
@@ -582,14 +588,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const updatePdfPreviewInfo = useCallback((type: 'modified' | 'marked', pdfInfo: CloudinaryFileInfo) => {
     setSessionDetailsState(prev => {
-        if (!prev) return null;
-        return {
-            ...prev,
-            pdf_preview_info: {
-                ...prev.pdf_preview_info,
-                [type]: pdfInfo,
-            },
-        };
+      if (!prev) return null;
+      return {
+        ...prev,
+        pdf_preview_info: {
+          ...prev.pdf_preview_info,
+          [type]: pdfInfo,
+        },
+      };
     });
   }, []);
 
@@ -600,23 +606,23 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     if (totalTerms === 0) return { totalTerms: 0, currentUserEffectiveCompliantCount: 0, currentUserEffectiveWarningCount: 0, currentUserEffectiveNonCompliantCount: 0, overallCompliancePercentage: 0 };
 
     let compliantCount = 0, warningCount = 0, nonCompliantCount = 0;
-    
+
     analysisTermsState.forEach(t => {
-        let effectiveStatus = t.compliance_status || 'compliant';
-        
-        if (t.expert_override_is_valid_sharia !== null && t.expert_override_is_valid_sharia !== undefined) {
-            effectiveStatus = t.expert_override_is_valid_sharia ? 'compliant' : 'non_compliant';
-        } else if (t.isUserConfirmed) {
-            effectiveStatus = t.compliance_status || 'compliant';
-        } else if (t.reviewedSuggestionStatus) {
-            effectiveStatus = t.reviewedSuggestionStatus;
-        } else if (t.isReviewedSuggestionValid !== null && t.isReviewedSuggestionValid !== undefined) {
-            effectiveStatus = t.isReviewedSuggestionValid ? 'compliant' : 'non_compliant';
-        }
-        
-        if (effectiveStatus === 'compliant') compliantCount++;
-        else if (effectiveStatus === 'warning') warningCount++;
-        else nonCompliantCount++;
+      let effectiveStatus = t.compliance_status || 'compliant';
+
+      if (t.expert_override_is_valid_sharia !== null && t.expert_override_is_valid_sharia !== undefined) {
+        effectiveStatus = t.expert_override_is_valid_sharia ? 'compliant' : 'non_compliant';
+      } else if (t.isUserConfirmed) {
+        effectiveStatus = t.compliance_status || 'compliant';
+      } else if (t.reviewedSuggestionStatus) {
+        effectiveStatus = t.reviewedSuggestionStatus;
+      } else if (t.isReviewedSuggestionValid !== null && t.isReviewedSuggestionValid !== undefined) {
+        effectiveStatus = t.isReviewedSuggestionValid ? 'compliant' : 'non_compliant';
+      }
+
+      if (effectiveStatus === 'compliant') compliantCount++;
+      else if (effectiveStatus === 'warning') warningCount++;
+      else nonCompliantCount++;
     });
 
     return {
