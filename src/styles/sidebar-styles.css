@@ -1,0 +1,67 @@
+
+/* Fixed sidebar toggle positioning */
+.sidebar-toggle-fixed {
+  position: fixed;
+  z-index: 50;
+  top: 5rem;
+}
+
+.ltr .sidebar-toggle-fixed {
+  left: 16.5rem;
+}
+
+.rtl .sidebar-toggle-fixed {
+  right: 16.5rem;
+}
+
+.ltr .sidebar-toggle-fixed.closed {
+  left: 1rem;
+}
+
+.rtl .sidebar-toggle-fixed.closed {
+  right: 1rem;
+}
+
+/* Improved sidebar transitions */
+.sidebar-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* RTL Sidebar Handling */
+[dir="rtl"] .sidebar-container {
+  left: auto;
+  right: 0;
+  border-left: 1px solid var(--border-color);
+  border-right: none;
+}
+
+[dir="rtl"] .sidebar-toggle {
+  transform: rotate(180deg);
+}
+
+/* RTL specific sidebar positioning for Arabic */
+html[lang="ar"] .sidebar-container {
+  left: auto !important;
+  right: 0 !important;
+}
+
+html[lang="ar"] .sidebar-toggle-button {
+  right: auto !important;
+  left: 1rem !important;
+}
+
+html[lang="ar"] .main-content {
+  margin-left: 0 !important;
+  margin-right: var(--sidebar-width, 16rem) !important;
+  transition: margin-right 0.3s ease;
+}
+
+html[lang="ar"] .main-content-wrapper {
+  margin-left: 0 !important;
+  margin-right: var(--sidebar-width, 16rem) !important;
+  transition: margin-right 0.3s ease;
+}
+
+html[lang="ar"] .sidebar-collapsed .main-content-wrapper {
+  margin-right: 0 !important;
+}

@@ -1,0 +1,101 @@
+/* src/styles/index.css */
+
+@import './base.css';
+@import './components.css';
+@import './animations.css';
+@import './layout.css'; /* Contains imports for rtl, sidebar, responsive, ui-components, arabic-specific */
+@import './dark-mode.css';
+@import './question-animations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ltr-in-rtl {
+  direction: ltr;
+  unicode-bidi: embed; /* Isolates the LTR text from the surrounding RTL context */
+  display: inline-block; /* Ensures it behaves as a block for directionality but flows inline */
+}
+
+/* Additional custom styles */
+.rtl-aware-root { /* This class is on the top div in Index.tsx */
+  width: 100%;
+  min-height: 100vh; /* Ensure it takes at least full viewport height */
+  position: relative; /* For potential absolute children if any */
+  display: flex; /* To make its direct child (App.tsx's motion.div) fill it */
+  flex-direction: column;
+}
+
+/* App.tsx's motion.div should also be full height */
+/* And the div inside BrowserRouter in App.tsx */
+#root > div, /* Assuming App.tsx's motion.div is the direct child of #root */
+#root > div > div { /* Assuming BrowserRouter's div is the next child */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Allow it to grow */
+}
+
+
+.app-container { /* This class was in index.css, assuming it's on a top-level div in App.tsx */
+  @apply relative min-h-screen w-full flex flex-col flex-1;
+}
+
+/* Enhanced transitions and effects */
+* {
+  @apply transition-colors duration-200;
+}
+
+body {
+  @apply bg-background text-foreground overflow-x-hidden;
+  min-height: 100vh; /* Ensure body also takes full height */
+}
+
+/* Focused card effects */
+.focused-card {
+  @apply transform transition-all duration-300 hover:translate-y-[-5px] hover:shadow-lg;
+}
+
+/* Glass card effects */
+.glass-card {
+  @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border border-gray-100/50 dark:border-gray-800/50 rounded-xl shadow-sm transition-all duration-300;
+}
+
+.glass-card:hover {
+  @apply shadow-md border-gray-200/70 dark:border-gray-700/70;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced button press effects */
+.press-effect {
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.press-effect:active {
+  transform: scale(0.97);
+}
+
+/* Enhanced loading spinner */
+.loading-spinner {
+  @apply w-10 h-10 border-2 border-transparent border-t-shariah-green rounded-full animate-spin;
+}
+
+/* RTL typography adjustments */
+[dir="rtl"] {
+  font-feature-settings: "tnum", "lnum"; /* For numbers, if needed */
+}
+
+/* Enhanced focus states */
+:focus-visible {
+  @apply outline-none ring-2 ring-shariah-green/40 ring-offset-2 ring-offset-background dark:ring-offset-card;
+}
+
+/* Sidebar animations and transitions are handled by framer-motion in MainContent.tsx */
+/* No specific CSS needed here for that if framer-motion handles width/transform */
+
+/* Ensure the main content area correctly pushes content */
+/* This is handled by inline styles (margins) in MainContent.tsx */

@@ -1,0 +1,50 @@
+
+/* Dark mode specific styles */
+
+/* Added improved dark mode components */
+.dark .text-container {
+  @apply text-gray-100;
+}
+
+.dark .card-content {
+  @apply text-gray-200 bg-gray-800/70;
+}
+
+.dark .explanation-text {
+  @apply text-gray-300;
+}
+
+/* Enhanced text readability in dark mode */
+.dark .text-muted {
+  @apply text-gray-400;
+}
+
+.dark .prose {
+  @apply text-gray-200;
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3 {
+  @apply text-gray-100;
+}
+
+.dark .prose p,
+.dark .prose ul,
+.dark .prose ol,
+.dark .prose blockquote {
+  @apply text-gray-300;
+}
+
+/* Dark mode input improvements */
+.dark input,
+.dark textarea,
+.dark select {
+  @apply bg-gray-800 border-gray-700 text-gray-200;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder,
+.dark select::placeholder {
+  @apply text-gray-500;
+}
