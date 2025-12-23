@@ -396,7 +396,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     setIsReviewingModification(prev => ({ ...prev, [termId]: true }));
     setErrorState(null);
     try {
-        const reviewResponse = await api.reviewUserModificationApi(sessionIdState, termId, userTextToReview, originalTermText);
+        const isExpert = currentUserRole === 'shariah_expert';
+        const reviewResponse = await api.reviewUserModificationApi(
+          sessionIdState,
+          termId,
+          userTextToReview,
+          originalTermText,
+          isExpert
+        );
         console.debug("[Session] reviewUserModification:success", { termId, compliance_status: reviewResponse.compliance_status });
         updateTermLocally({
             term_id: termId,

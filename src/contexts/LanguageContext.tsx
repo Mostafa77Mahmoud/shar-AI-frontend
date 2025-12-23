@@ -174,6 +174,20 @@ const translations = {
     'questionAnimation.analyzing': 'Consulting Sharia knowledge base...',
     'questionAnimation.formulating': 'Formulating response...',
     'questionAnimation.patience': 'Thank you for your patience.',
+    // History / logging
+    'history.title': 'Decision History',
+    'history.noHistory': 'No history yet',
+    'history.userEdit': 'User edit',
+    'history.aiReview': 'AI review',
+    'history.expertFeedback': 'Expert feedback',
+    'history.confirmation': 'Confirmation',
+    'history.user': 'User',
+    'history.ai': 'AI',
+    'history.expert': 'Expert',
+    // Refresh
+    'term.refresh': 'Refresh',
+    'term.refreshed': 'Session refreshed',
+    'error.refreshFailed': 'Refresh failed',
     'generate.stage1': "Drafting Initial Document",
     'generate.stage2': "Applying Modifications",
     'generate.stage3': "Final Review & Formatting",
@@ -518,6 +532,22 @@ const translations = {
  'role.regular': "وضع المستخدم",
 
  'role.expert': "وضع الخبير",
+
+// History / logging
+'history.title': 'سجل القرارات',
+'history.noHistory': 'لا يوجد سجل قرارات',
+'history.userEdit': 'تعديل المستخدم',
+'history.aiReview': 'مراجعة الذكاء الاصطناعي',
+'history.expertFeedback': 'ملاحظة الخبير',
+'history.confirmation': 'تأكيد التعديل',
+'history.user': 'مستخدم',
+'history.ai': 'ذكاء اصطناعي',
+'history.expert': 'خبير',
+
+// Refresh
+'term.refresh': 'تحديث',
+'term.refreshed': 'تم تحديث الجلسة',
+'error.refreshFailed': 'فشل التحديث',
 
  'expert.feedbackTitle': "مراجعة وتعليقات الخبير",
 

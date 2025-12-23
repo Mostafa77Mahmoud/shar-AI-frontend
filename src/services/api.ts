@@ -183,11 +183,23 @@ export const askQuestion = async (sessionId: string, questionText: string, termI
   return handleResponse<InteractApiResponse>(response);
 };
 
-export const reviewUserModificationApi = async (sessionId: string, termId: string, userModifiedText: string, originalTermText: string): Promise<ReviewModificationApiResponse> => {
+export const reviewUserModificationApi = async (
+  sessionId: string,
+  termId: string,
+  userModifiedText: string,
+  originalTermText: string,
+  isExpert: boolean = false
+): Promise<ReviewModificationApiResponse> => {
   const response = await fetch(`${API_BASE_URL}/review_modification`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...NGROK_SKIP_BROWSER_WARNING_HEADER },
-    body: JSON.stringify({ session_id: sessionId, term_id: termId, user_modified_text: userModifiedText, original_term_text: originalTermText }),
+    body: JSON.stringify({
+      session_id: sessionId,
+      term_id: termId,
+      user_modified_text: userModifiedText,
+      original_term_text: originalTermText,
+      is_expert: isExpert,
+    }),
   });
   return handleResponse<ReviewModificationApiResponse>(response);
 };
